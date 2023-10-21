@@ -1,0 +1,26 @@
+{
+  "name": "ts-node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@chainsafe/libp2p-noise": "^13.0.1",
+    "@chainsafe/libp2p-yamux": "^5.0.0",
+    "@helia/strings": "^1.0.1",
+    "@libp2p/bootstrap": "^9.0.8",
+    "@libp2p/tcp": "^8.0.9",
+    "@types/node": "^20.5.0",
+    "blockstore-core": "^4.3.4",
+    "datastore-core": "^9.2.3",
+    "dotenv": "^16.3.1",
+    "helia": "^2.0.3",
+    "libp2p": "^0.46.14",
+    "termx": "^1.2.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "start": "ts-node --esm index.ts"
+  }
+}
