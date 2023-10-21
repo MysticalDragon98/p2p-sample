@@ -14,6 +14,9 @@ export default async function initP2P () {
     log(`P2P node created with addresses: ${$libp2p.getMultiaddrs()}`);
     await $libp2p.start();
     log(`P2P node started!`);
-
-    log("Peers:", await $libp2p.getPeers())
+    
+    setInterval(async () => {
+        const peers = await $libp2p.peerStore.all();
+        log("Peers:", peers.map(peer => peer.id))
+    }, 1000);
 }
