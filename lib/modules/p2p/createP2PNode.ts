@@ -6,14 +6,21 @@ import { tcp } from "@libp2p/tcp";
 import { bootstrap } from '@libp2p/bootstrap';
 import { identifyService } from 'libp2p/identify';
 import { kadDHT } from "@libp2p/kad-dht";
-import { $DHT_MODE } from '../../env.js';
+import { PeerId } from '@libp2p/interface/dist/src/peer-id';
 
-export default async function createP2PNode (listeningAddresses: string[], peerAddresses: string[]) {
+interface IOptions {
+    peerId: PeerId;
+    listenAddresses: string[];
+    peerAddresses: string[];
+    dhtMode: "client" | "server";
+}
+export default async function createP2PNode (options: IOptions) {
     const datastore = new MemoryDatastore();
+    
     const libp2p = await createLibp2p({
         datastore,
         addresses: {
-            listen: listeningAddresses
+            listen: options.listenAddresses
         },
         transports: [
             tcp()
@@ -24,22 +31,35 @@ export default async function createP2PNode (listeningAddresses: string[], peerA
         streamMuxers: [
             yamux()
         ],
-        peerDiscovery: peerAddresses.length > 0? [
+        peerDiscovery: options.peerAddresses.length > 0? [
             bootstrap({
-                list: peerAddresses
+                list: options.peerAddresses
             })
         ] : [],
 
         services: {
             identify: identifyService(),
             dht: kadDHT({
-                clientMode: $DHT_MODE !== "server"
+                clientMode: options.dhtMode === "client",
             })
-        }
+        },
+        peerId: options.peerId ?? null
     });
 
+    /*(<any>libp2p.services.dht.wan).addEventListener('peer', peer => {
+        console.log("Discovered wan:", peer.detail.id)
+    });
+
+    (<any>libp2p.services.dht.lan).addEventListener('peer', async peer => {
+        console.log("Discovered lan:", peer.detail.id);
+
+        const address = await libp2p.peerStore.get(peer.detail.id);
+        console.log("Peer ->", address)
+    });*/
+
     /*libp2p.addEventListener('peer:discovery', async (evt: any) => {
-        console.log(`Discovered:`, evt.detail);
+        console.log(`Discovered:`, evt.detail.id);
+        console.log(`Peers:`, (<any>).running)
     });*/
 
     return libp2p;
