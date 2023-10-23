@@ -48,6 +48,11 @@ export default async function createP2PNode (options: IOptions) {
 
     libp2p.addEventListener('peer:discovery', async (evt: any) => {
         console.log(`Discovered:`, evt.detail.id);
+        console.log(`Addresses:`, evt.detail.multiaddrs)
+
+        // const conn = await libp2p.dial(evt.detail.id);
+
+        // console.log("Connection:", conn);
     });
 
     return libp2p;

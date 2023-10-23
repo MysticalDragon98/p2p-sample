@@ -16,7 +16,6 @@ export default async function initP2P () {
         dhtMode: $DHT_MODE === "server"? "server" : "client"
     });
 
-    
     if (!peerId) {
         log("Public Key:", "0x" + Buffer.from($libp2p.peerId.publicKey!).toString('hex'));
         log("Private Key:", "0x" + Buffer.from($libp2p.peerId.privateKey!).toString('hex'));
