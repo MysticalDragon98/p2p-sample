@@ -12,7 +12,6 @@ export default async function initP2P () {
     ) as Libp2p;
 
     log(`P2P node created with addresses: ${$libp2p.getMultiaddrs()}`);
-    await $libp2p.start();
     log(`P2P node started!`);
     
     setInterval(async () => {

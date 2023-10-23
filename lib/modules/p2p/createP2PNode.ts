@@ -5,6 +5,7 @@ import { createLibp2p } from "libp2p";
 import { tcp } from "@libp2p/tcp";
 import { bootstrap } from '@libp2p/bootstrap';
 import { identifyService } from 'libp2p/identify';
+import { kadDHT } from "@libp2p/kad-dht";
 
 export default async function createP2PNode (listeningAddresses: string[], peerAddresses: string[]) {
     const datastore = new MemoryDatastore();
@@ -29,7 +30,8 @@ export default async function createP2PNode (listeningAddresses: string[], peerA
         ] : [],
 
         services: {
-            identify: identifyService()
+            identify: identifyService(),
+            dht: kadDHT()
         }
     });
 

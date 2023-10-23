@@ -248,7 +248,7 @@
     p-defer "^4.0.0"
     p-queue "^7.3.4"
 
-"@libp2p/kad-dht@^10.0.2":
+"@libp2p/kad-dht@^10.0.2", "@libp2p/kad-dht@^10.0.9":
   version "10.0.9"
   resolved "https://registry.npmjs.org/@libp2p/kad-dht/-/kad-dht-10.0.9.tgz#449e0c5e170d34286f63b55598ee826e7fb15a5c"
   integrity sha512-O/Kwg4+eMip/I4n810WmCHAaQlB83LxvhOEcGtfRsKwF7JnJn/0Tu8+vEaIJATA7Ear6rWrhqyo7qgJonIauqA==
