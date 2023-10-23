@@ -6,6 +6,7 @@ import { tcp } from "@libp2p/tcp";
 import { bootstrap } from '@libp2p/bootstrap';
 import { identifyService } from 'libp2p/identify';
 import { kadDHT } from "@libp2p/kad-dht";
+import { $DHT_MODE } from '../../env';
 
 export default async function createP2PNode (listeningAddresses: string[], peerAddresses: string[]) {
     const datastore = new MemoryDatastore();
@@ -31,8 +32,15 @@ export default async function createP2PNode (listeningAddresses: string[], peerA
 
         services: {
             identify: identifyService(),
-            dht: kadDHT()
+            dht: kadDHT({
+                clientMode: $DHT_MODE !== "server"
+            })
         }
+    });
+
+    libp2p.addEventListener('peer:discovery', async (evt: any) => {
+        console.log(`Discovered:`, evt.detail);
+        console.log("Mode: ", await libp2p.services.dht.getMode());
     });
 
     return libp2p;
