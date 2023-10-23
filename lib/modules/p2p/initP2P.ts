@@ -26,8 +26,9 @@ export default async function initP2P () {
     log(`P2P node started!`);
     
     setInterval(async () => {
-        // log("WAN RoutingTable:", $libp2p.services.dht.wan.routingTable)
-        // log("LAN RoutingTable:", await $libp2p.peerStore.all());
+        const peers = await $libp2p.peerStore.all();
+        
+        log("PeerStore:", peers.map(peer => peer.id));
         await $libp2p.services.dht.refreshRoutingTable();
     }, 5000);
 }
