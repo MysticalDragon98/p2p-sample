@@ -46,21 +46,9 @@ export default async function createP2PNode (options: IOptions) {
         peerId: options.peerId ?? null
     });
 
-    /*(<any>libp2p.services.dht.wan).addEventListener('peer', peer => {
-        console.log("Discovered wan:", peer.detail.id)
-    });
-
-    (<any>libp2p.services.dht.lan).addEventListener('peer', async peer => {
-        console.log("Discovered lan:", peer.detail.id);
-
-        const address = await libp2p.peerStore.get(peer.detail.id);
-        console.log("Peer ->", address)
-    });*/
-
-    /*libp2p.addEventListener('peer:discovery', async (evt: any) => {
+    libp2p.addEventListener('peer:discovery', async (evt: any) => {
         console.log(`Discovered:`, evt.detail.id);
-        console.log(`Peers:`, (<any>).running)
-    });*/
+    });
 
     return libp2p;
 }
