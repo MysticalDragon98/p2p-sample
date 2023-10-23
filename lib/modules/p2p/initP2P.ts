@@ -11,7 +11,8 @@ export default async function initP2P () {
 
     $libp2p = await createP2PNode({
         peerId,
-        listenAddresses: $P2P_HOSTS.map(host => `/ip4/${host}/tcp/${$P2P_PORT}`),
+        listenAddresses: [`/ip4/0.0.0.0/tcp/${$P2P_PORT}`],
+        advertiseAddresses: $P2P_HOSTS.map(host => `/ip4/${host}/tcp/${$P2P_PORT}`),
         peerAddresses: $P2P_KNOWN_PEERS,
         dhtMode: $DHT_MODE === "server"? "server" : "client"
     });

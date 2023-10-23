@@ -12,6 +12,7 @@ interface IOptions {
     peerId: PeerId;
     listenAddresses: string[];
     peerAddresses: string[];
+    advertiseAddresses: string[];
     dhtMode: "client" | "server";
 }
 export default async function createP2PNode (options: IOptions) {
@@ -20,7 +21,8 @@ export default async function createP2PNode (options: IOptions) {
     const libp2p = await createLibp2p({
         datastore,
         addresses: {
-            listen: options.listenAddresses
+            listen: options.listenAddresses,
+            announce: options.advertiseAddresses
         },
         transports: [
             tcp()
